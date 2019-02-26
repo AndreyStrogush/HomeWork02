@@ -2,10 +2,11 @@ package homework02.immutable;
 
 import java.util.Scanner;
 
-final public class ImmutableDemo {
+public final class ImmutableDemo {
 
     private final int id;
     private final String name;
+    private final Age age;
 
     public int getId() {
         return id;
@@ -15,23 +16,33 @@ final public class ImmutableDemo {
         return name;
     }
 
-    public ImmutableDemo(int id, String name) {
+    public Age getAge() {return age; }
+
+    public ImmutableDemo(int id, String name, Age age) {
         this.id = id;
         this.name = name;
+        this.age = age;
     }
 
-    public static void DemoBuilder() {
+    public static void testImmutableDemo() {
         int id;
         String name;
+        Age age = new Age();
 
-        System.out.println("Введите возраст");
+        System.out.println("Enter id");
         Scanner sc = new Scanner(System.in);
         id = sc.nextInt();
-        System.out.println("Введите имя");
+
+        System.out.println("Enter name");
         Scanner sc1 = new Scanner(System.in);
         name = sc1.nextLine();
-        ImmutableDemo immutableDemo = new ImmutableDemo(id, name);
-        System.out.println("Созданн новый неизменяемый объект, id =  "
-                + immutableDemo.getId() + ", имя - " + immutableDemo.getName());
+
+        System.out.println("Enter Year");
+        age.setYear(sc.nextInt());
+
+        ImmutableDemo immutableDemo = new ImmutableDemo(id, name, age);
+        System.out.println("New immutable object created, id =  "
+                + immutableDemo.getId() + ", name is " + immutableDemo.getName() +
+                ", age is " + immutableDemo.getAge().getYear());
     }
 }
