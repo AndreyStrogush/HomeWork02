@@ -3,10 +3,15 @@ package homework02.immutable;
 import java.util.Scanner;
 
 public final class ImmutableDemo {
-
     private final int id;
     private final String name;
     private final Age age;
+
+    public ImmutableDemo(int id, String name, Age age) {
+        this.id = id;
+        this.name = name;
+        this.age = (new Age(age.getYear()));
+    }
 
     public int getId() {
         return id;
@@ -16,18 +21,14 @@ public final class ImmutableDemo {
         return name;
     }
 
-    public Age getAge() {return age; }
-
-    public ImmutableDemo(int id, String name, Age age) {
-        this.id = id;
-        this.name = name;
-        this.age = age;
+    public Age getAge() {
+        return new Age(age.getYear());
     }
 
     public static void testImmutableDemo() {
         int id;
         String name;
-        Age age = new Age();
+        Age age = new Age(18);
 
         System.out.println("Enter id");
         Scanner sc = new Scanner(System.in);

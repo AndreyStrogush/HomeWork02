@@ -5,9 +5,9 @@ import java.util.Scanner;
 public class BuildWebsiteRunner {
 
     public static void runWebsiteBuilder() {
-        System.out.println("Выберите сайт для создания: \n" +
-                "1. Сайт - \"визитка\"  \n" +
-                "2. Корпаративный сайт ");
+        System.out.println("Select a site to create: \n" +
+                "1. Site - \"promo\"  \n" +
+                "2. Enterprise site ");
 
         Scanner sc = new Scanner(System.in);
         Integer choice = sc.nextInt();
@@ -22,7 +22,7 @@ public class BuildWebsiteRunner {
                 director.setBuilder(new EnterpriseWebsiteBuilder());
                 break;
             default:
-                System.out.println("Ошибка ввода");
+                System.out.println("Input error");
                 break;
         }
 

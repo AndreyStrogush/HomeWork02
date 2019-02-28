@@ -3,7 +3,7 @@ package homework02.immutable;
 public class Age {
     private int day;
     private int month;
-    private  int year;
+    private int year;
 
     public int getDay() {
         return day;
@@ -26,6 +26,15 @@ public class Age {
     }
 
     public void setYear(int year) {
+        this.year = year;
+    }
+
+    //constructor with 0 parameters
+    public Age() {
+    }
+
+    //constructor with year as parameter
+    public Age(int year) {
         this.year = year;
     }
 }

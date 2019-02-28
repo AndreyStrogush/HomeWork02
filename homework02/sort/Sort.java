@@ -7,22 +7,23 @@ import java.util.Scanner;
 
 public class Sort {
 
-    //создаем массив, в данном случае заранее заданного размера
+    //create an array, in this case a predetermined size
     public static int[] create() {
         int n = 1000000;
         int array[] = new int[n];
-        for (int i = 0; i < n; i++)
+        for (int i = 0; i < n; i++) {
             array[i] = (int) (Math.random() * n);
+        }
 
         return array;
     }
 
     public static void measure() {
-        int[] numbers = Sort.create();              // создаем массив
+        int[] numbers = Sort.create();              // create an array
 
-        int low = 0, high = numbers.length - 1;     //значения для некоторых сортировок - 1й и последний элементы
-        Scanner sc = new Scanner(System.in);        //сканнер для выбора метода сортировки
-        Sort.printArray(numbers, 40);           //просто посмотреть как сработал Рандом
+        int low = 0, high = numbers.length - 1;     //values for some sorts - 1st and last elements
+        Scanner sc = new Scanner(System.in);        //scanner to choose sorting method
+        Sort.printArray(numbers, 40);           //just see how Random worked
 
         System.out.println("Choose sorting metod: \n" +
                 "\t 1. Quick sort \n" +
@@ -35,44 +36,45 @@ public class Sort {
                 "\t 8. Radix sort \n");
         int n = sc.nextInt();
 
-        long startTime = System.currentTimeMillis();            // фиксируем начало выполнения
+        long startTime = System.currentTimeMillis();            // the start of execution
         switch (n) {
-            //      1. Быстрая сортировка
+            //      1. Quick sort
             case 1:
                 System.out.println("Quick sort: ");         //165 ms
                 Sort.quickSort(numbers, low, high);
                 break;
-            //      2. Сортировка слиянием
+            //      2. Merge sort
             case 2:
                 System.out.println("Merge sort: ");       //312 ms
                 Sort.mergeSort(numbers, low, high);
                 break;
-            //      3. Пирамидальная сортировка
+            //      3. Heap sort
             case 3:
                 System.out.println("Heap sort: ");   //234 ms
                 Sort.heapSort(numbers);
                 break;
-            //      4. Пузырьковая сортировка
+            //  4. Bubble sort
             case 4:
                 System.out.println("Bubble sort: ");     // ???
                 Sort.bubbleSort(numbers);
                 break;
-            //      5. Сортировка вставками
+
+            // 5. Shell sort
             case 5:
                 System.out.println("Shell sort: ");      //298 ms
                 Sort.shellSort(numbers);
                 break;
-            //      6. Сортировка выбором
+            // 6. Selection sort
             case 6:
                 System.out.println("Selection sort: ");         //64 ms
                 Sort.sort(numbers, numbers.length);
                 break;
-            //      7. Блочная сортировка
+            // 7. Bucket sort
             case 7:
                 System.out.println("Bucket sort: ");         //31 ms
                 Sort.bucketSort(numbers);
                 break;
-            //      8. Поразрядная сортировка
+            // 8. Radix sort
             case 8:
                 System.out.println("Radix sort: ");     //607 ms
                 Sort.radixSort(numbers);
@@ -82,16 +84,16 @@ public class Sort {
                 break;
         }
 
-        long endTime = System.currentTimeMillis();                  //окончание процесса
+        long endTime = System.currentTimeMillis();                  //end of sorting
 
         System.out.println("Time of sort is: "
-                + (endTime - startTime) + " ms");                   //выводим потраченное время в миллисекундах
-        Sort.printArray(numbers, 40);                //проверяем как сработала сортировка
+                + (endTime - startTime) + " ms");                   //display the time spent in milliseconds
+        Sort.printArray(numbers, 40);                            //check how sorting worked
     }
 
-    //собственно алгоритмы сортировок
+    //sort algorithms
 
-    //      1. Быстрая сортировка
+    //      1. Quick sort
     public static int[] quickSort(int[] numbers, int low, int high) {
         if (low < high) {
             int dp = partition(numbers, low, high);
@@ -101,7 +103,7 @@ public class Sort {
         return numbers;
     } //end quickSort
 
-    //      2. Сортировка слиянием
+    //      2. marge sort
     public static int[] mergeSort(int[] numbers, int low, int high) {
         if (low < high) { // list contains at least 2 elements
             int mid = (low + high) / 2;
@@ -112,11 +114,12 @@ public class Sort {
         return numbers;
     } // end margeSort
 
-    //      3. Пирамидальная сортировка
+    //      3. heap sort
     public static int[] heapSort(int[] numbers) {
-        for (int i = numbers.length / 2 - 1; i >= 0; i--)
+        for (int i = numbers.length / 2 - 1; i >= 0; i--) {
             // convert the array to a heap
             shiftDown(numbers, i, numbers.length);
+        }
         for (int i = numbers.length - 1; i > 0; i--) {
             swap(numbers, 0, i); /* deleteMax */
             shiftDown(numbers, 0, i);
@@ -124,27 +127,22 @@ public class Sort {
         return numbers;
     } // end heapSort
 
-    //      4. Пузырьковая сортировка
+    //      4. bubble sort
     public static int[] bubbleSort(int[] numbers) {
-
         int n = numbers.length;
-        int temp;
 
         for (int i = 0; i < n; i++) {
             for (int j = 1; j < (n - i); j++) {
-
+                //swap elements
                 if (numbers[j - 1] > numbers[j]) {
-                    //swap elements
-                    temp = numbers[j - 1];
-                    numbers[j - 1] = numbers[j];
-                    numbers[j] = temp;
+                    swap(numbers, i, j);
                 }
             }
         }
         return numbers;
     }//end bubbleSort
 
-    //      5. Сортировка вставками
+    //      5. shell sort
     public static int[] shellSort(int[] numbers) {
         int j;
         for (int gap = numbers.length / 2; gap > 0; gap /= 2) {
@@ -159,18 +157,19 @@ public class Sort {
         return numbers;
     }//end shellSort
 
-    //      6. Сортировка выбором
+    //      6. selection sort
     public static int[] sort(int[] numbers, int n) {
-
-        int min = 0, max = 0;
+        int min = 0;
+        int max = 0;
 
         for (int i = 1; i < n; i++) {
 
-            if (numbers[i] > max)
+            if (numbers[i] > max) {
                 max = numbers[i];
-
-            if (numbers[i] < min)
+            }
+            if (numbers[i] < min) {
                 min = numbers[i];
+            }
         }
 
         int range = max - min + 1;
@@ -179,16 +178,14 @@ public class Sort {
 
         //counts frequencies for each element
 
-        for (int i = 0; i < n; i++)
-
+        for (int i = 0; i < n; i++) {
             count[numbers[i] - min]++;
-
+        }
         // getting positions in final array
 
-        for (int i = 1; i < range; i++)
-
+        for (int i = 1; i < range; i++) {
             count[i] += count[i - 1];
-
+        }
 
         //copy to output array, preserving order of inputs with equal keys
         int j = 0;
@@ -202,10 +199,12 @@ public class Sort {
         return numbers;
     }//end sort
 
-    //      7. Блочная сортировка
+    //      7. bucket sort
     public static int[] bucketSort(int[] numbers) {
-        int i, j;
+        int i;
+        int j;
         int[] bucket = new int[numbers.length + 1];
+
         Arrays.fill(bucket, 0);
 
         for (i = 0; i < numbers.length; i++) {
@@ -221,9 +220,9 @@ public class Sort {
         return numbers;
     }//end bucketSort
 
-    //      8. Поразрядная сортировка
+    //      8. radix sort
     public static int[] radixSort(int[] numbers) {
-
+        final int DIV = 10;
         List<Integer>[] buckets = new ArrayList[10];
         for (int i = 0; i < buckets.length; i++) {
             buckets[i] = new ArrayList<Integer>();
@@ -237,26 +236,26 @@ public class Sort {
             // split input between lists
             for (Integer i : numbers) {
                 tmp = i / divisor;
-                buckets[tmp % 10].add(i);
+                buckets[tmp % DIV].add(i);
                 if (flag && tmp > 0) {
                     flag = false;
                 }
             }
             // empty lists into input array
             int a = 0;
-            for (int b = 0; b < 10; b++) {
+            for (int b = 0; b < DIV; b++) {
                 for (Integer i : buckets[b]) {
                     numbers[a++] = i;
                 }
                 buckets[b].clear();
             }
             // move to next digit
-            divisor *= 10;
+            divisor *= DIV;
         }
         return numbers;
     }//end radixSort
 
-    // дополнительные методы
+    // additional methods
 
     // partition numbers[low] to numbers[high] using numbers[low] as the pivot
     private static int partition(int[] numbers, int low, int high) {
@@ -272,31 +271,30 @@ public class Sort {
         return i;
     }//end partition
 
-    /*
-     * Merge sorted array of elements from low to mid and mid+1
-     * low is the left most position of the subset of elements
-     * high is the right most position of the subset of elements
-     */
+    //     Merge sorted array of elements from low to mid and mid+1
+    //      low is the left most position of the subset of elements
+    //      high is the right most position of the subset of elements
     private static void merge(int[] subset, int low, int mid, int high) {
 
         int n = high - low + 1;
-        int[] Temp = new int[n];
+        int[] temp = new int[n];
 
         int i = low, j = mid + 1;
         int k = 0;
 
         while (i <= mid || j <= high) {
-            if (i > mid)
-                Temp[k++] = subset[j++];
-            else if (j > high)
-                Temp[k++] = subset[i++];
-            else if (subset[i] < subset[j])
-                Temp[k++] = subset[i++];
-            else
-                Temp[k++] = subset[j++];
+            if (i > mid) {
+                temp[k++] = subset[j++];
+            } else if (j > high) {
+                temp[k++] = subset[i++];
+            } else if (subset[i] < subset[j]) {
+                temp[k++] = subset[i++];
+            } else {
+                temp[k++] = subset[j++];
+            }
         }
         for (j = 0; j < n; j++)
-            subset[low + j] = Temp[j];
+            subset[low + j] = temp[j];
     } // end merge
 
     // Exchange list[i] and list[j] values
@@ -307,24 +305,26 @@ public class Sort {
         numbers[j] = temp;
     }
 
-    //heapSort
+    // for heapSort
     private static void shiftDown(int[] a, int i, int n) {
         int child;
         int tmp;
 
         for (tmp = a[i]; leftChild(i) < n; i = child) {
             child = leftChild(i);
-            if (child != n - 1 && (a[child] < a[child + 1]))
+            if (child != n - 1 && (a[child] < a[child + 1])) {
                 child++;
-            if (tmp < a[child])
+            }
+            if (tmp < a[child]) {
                 a[i] = a[child];
-            else
+            } else {
                 break;
+            }
         }
         a[i] = tmp;
     }//end shiftDown
 
-    //heapSort
+    // for heapSort
     private static int leftChild(int i) {
         return 2 * i + 1;
     }
@@ -334,9 +334,8 @@ public class Sort {
         for (int i = 0; i < n; i++) {
             System.out.print(numbers[i] + "; ");
         }
-        if (n < numbers.length)
+        if (n < numbers.length) {
             System.out.println("...");
+        }
     }
-
-
 }
