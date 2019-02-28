@@ -14,16 +14,16 @@ public class Sort {
         for (int i = 0; i < n; i++) {
             array[i] = (int) (Math.random() * n);
         }
-
         return array;
     }
 
     public static void measure() {
         int[] numbers = Sort.create();              // create an array
-
+        int[] numbers2  = new int[numbers.length];  // copy  of array
         int low = 0, high = numbers.length - 1;     //values for some sorts - 1st and last elements
         Scanner sc = new Scanner(System.in);        //scanner to choose sorting method
-        Sort.printArray(numbers, 40);           //just see how Random worked
+        //create copy of array
+        System.arraycopy(numbers, 0, numbers2, 0, numbers.length);
 
         System.out.println("Choose sorting metod: \n" +
                 "\t 1. Quick sort \n" +
@@ -41,43 +41,43 @@ public class Sort {
             //      1. Quick sort
             case 1:
                 System.out.println("Quick sort: ");         //165 ms
-                Sort.quickSort(numbers, low, high);
+                Sort.quickSort(numbers2, low, high);
                 break;
             //      2. Merge sort
             case 2:
                 System.out.println("Merge sort: ");       //312 ms
-                Sort.mergeSort(numbers, low, high);
+                Sort.mergeSort(numbers2, low, high);
                 break;
             //      3. Heap sort
             case 3:
                 System.out.println("Heap sort: ");   //234 ms
-                Sort.heapSort(numbers);
+                Sort.heapSort(numbers2);
                 break;
             //  4. Bubble sort
             case 4:
                 System.out.println("Bubble sort: ");     // ???
-                Sort.bubbleSort(numbers);
+                Sort.bubbleSort(numbers2);
                 break;
 
             // 5. Shell sort
             case 5:
                 System.out.println("Shell sort: ");      //298 ms
-                Sort.shellSort(numbers);
+                Sort.shellSort(numbers2);
                 break;
             // 6. Selection sort
             case 6:
                 System.out.println("Selection sort: ");         //64 ms
-                Sort.sort(numbers, numbers.length);
+                Sort.sort(numbers2, numbers2.length);
                 break;
             // 7. Bucket sort
             case 7:
                 System.out.println("Bucket sort: ");         //31 ms
-                Sort.bucketSort(numbers);
+                Sort.bucketSort(numbers2);
                 break;
             // 8. Radix sort
             case 8:
                 System.out.println("Radix sort: ");     //607 ms
-                Sort.radixSort(numbers);
+                Sort.radixSort(numbers2);
                 break;
             default:
                 System.out.println("Wrong input");
@@ -88,7 +88,10 @@ public class Sort {
 
         System.out.println("Time of sort is: "
                 + (endTime - startTime) + " ms");                   //display the time spent in milliseconds
-        Sort.printArray(numbers, 40);                            //check how sorting worked
+        System.out.println("Initial array: \n");                    //check how sorting worked
+        Sort.printArray(numbers,40);
+        System.out.println("\nArray after sorting: \n");
+        Sort.printArray(numbers2, 40);
     }
 
     //sort algorithms
@@ -330,7 +333,6 @@ public class Sort {
     }
 
     public static void printArray(int[] numbers, int n) {
-        System.out.println("Array created with following values: ");
         for (int i = 0; i < n; i++) {
             System.out.print(numbers[i] + "; ");
         }
